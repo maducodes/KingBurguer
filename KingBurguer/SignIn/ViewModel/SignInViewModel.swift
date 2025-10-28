@@ -27,7 +27,7 @@ final class SignInViewModel {
         
         // Simula latencia de rede
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.state = .error("Usuario nao existe")
+            self.state = .goToHome
         }
     }
     
@@ -35,5 +35,7 @@ final class SignInViewModel {
         coordinator?.signUp()
     }
     
-    func goToHome() {}
+    func goToHome() {
+        coordinator?.home()
+    }
 }
