@@ -14,6 +14,7 @@ protocol SignInViewModelDelegate {
 final class SignInViewModel {
     
     var delegate: SignInViewModelDelegate?
+    var coordinator: SignInCoordinator?
     
     var state: SignInState = .none {
         didSet {
@@ -29,4 +30,10 @@ final class SignInViewModel {
             self.state = .error("Usuario nao existe")
         }
     }
+    
+    func goToSignUp() {
+        coordinator?.signUp()
+    }
+    
+    func goToHome() {}
 }

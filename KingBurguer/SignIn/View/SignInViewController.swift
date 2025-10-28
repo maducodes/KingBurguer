@@ -66,8 +66,7 @@ final class SignInViewController: UIViewController {
     }
     
     @objc private func handleTapRegister() {
-        let signUpViewController = SignUpViewController()
-        navigationController?.pushViewController(signUpViewController, animated: true)
+        viewModel?.goToSignUp()
     }
     
     // MARK: - Layouts
@@ -120,7 +119,7 @@ extension SignInViewController: SignInViewModelDelegate {
             //mostrar progress
             break
         case .goToHome:
-            //ir para home
+            viewModel?.goToHome()
             break
         case .error(let errorMessage):
             let alertViewController = UIAlertController(title: "titulo", message: errorMessage, preferredStyle: .alert)
