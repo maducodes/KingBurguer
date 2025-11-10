@@ -22,6 +22,8 @@ final class SignInViewController: UIViewController {
         textField.backgroundColor = .systemCyan
         textField.placeholder = "Entre com seu email"
         textField.translatesAutoresizingMaskIntoConstraints = false
+        textField.returnKeyType = .next
+        textField.delegate = self
         return textField
     }()
     
@@ -29,6 +31,8 @@ final class SignInViewController: UIViewController {
         let textField = UITextField()
         textField.backgroundColor = .systemCyan
         textField.placeholder = "Entre com sua senha"
+        textField.returnKeyType = .done
+        textField.delegate = self
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
@@ -75,6 +79,8 @@ final class SignInViewController: UIViewController {
         viewModel?.goToSignUp()
     }
     
+    // MARK: Keyboard settings
+    
     @objc private func dismissKeyboard(_ view: UITapGestureRecognizer) {
         self.view.endEditing(true)
     }
@@ -96,24 +102,24 @@ final class SignInViewController: UIViewController {
     
     private func setupContraints() {
         NSLayoutConstraint.activate([
-            emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            emailTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
+            emailTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            emailTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            emailTextField.topAnchor.constraint(equalTo: view.topAnchor, constant: 100),
             emailTextField.heightAnchor.constraint(equalToConstant: 50),
             
-            passwordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            passwordTextField.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            passwordTextField.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             passwordTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: 10),
             passwordTextField.heightAnchor.constraint(equalToConstant: 50),
             
             signInButton.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: 10),
-            signInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            signInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            signInButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            signInButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             signInButton.heightAnchor.constraint(equalToConstant: 50),
             
             registerButton.topAnchor.constraint(equalTo: signInButton.bottomAnchor, constant: 10),
-            registerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            registerButton.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            registerButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            registerButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             registerButton.heightAnchor.constraint(equalToConstant: 50),
         ])
     }
@@ -136,5 +142,18 @@ extension SignInViewController: SignInViewModelDelegate {
             alertViewController.addAction(UIAlertAction(title: "Fechar", style: .default))
             self.present(alertViewController, animated: true)
         }
+    }
+}
+
+extension SignInViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        switch textField.returnKeyType {
+        case .done:
+            view.endEditing(true)
+            viewModel?.send()
+        default:
+            passwordTextField.becomeFirstResponder()
+        }
+        return false
     }
 }
