@@ -59,6 +59,12 @@ final class SignInViewController: UIViewController {
         navigationItem.title = "Login"
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tap)
+    }
+    
     // MARK: - Eventos de touch
     
     @objc private func handleTapButton() {
@@ -67,6 +73,10 @@ final class SignInViewController: UIViewController {
     
     @objc private func handleTapRegister() {
         viewModel?.goToSignUp()
+    }
+    
+    @objc private func dismissKeyboard(_ view: UITapGestureRecognizer) {
+        self.view.endEditing(true)
     }
     
     // MARK: - Layouts
