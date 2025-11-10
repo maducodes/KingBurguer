@@ -29,4 +29,8 @@ final class SignUpViewModel {
             self.state = .error("Erro interno no servidor")
         }
     }
+    
+    func goToHome() {
+        coordinator?.home()
+    }
 }

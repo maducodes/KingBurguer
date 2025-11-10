@@ -48,7 +48,6 @@ final class SignUpViewController: UIViewController {
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
     }()
-
     
     private lazy var birthdayTextField: UITextField = {
         let textField = UITextField()
@@ -142,7 +141,7 @@ extension SignUpViewController: SignUpViewModelDelegate {
             //mostrar progress
             break
         case .goToHome:
-            //navegar para tela principal
+            viewModel?.goToHome()
             break
         case .error(let errorMessage):
             let alertViewController = UIAlertController(title: "titulo", message: errorMessage, preferredStyle: .alert)
